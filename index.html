@@ -38,7 +38,7 @@ tr.cut td{border-bottom:2px dashed var(--acc)}
 .f{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}.f input,.f select{width:100%;font:15px system-ui,sans-serif;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}.f .full{grid-column:1/-1}
 .sum{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.sum div{flex:1 1 90px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:12px system-ui,sans-serif;color:var(--mute)}.sum b{display:block;font:800 18px system-ui,sans-serif;color:var(--ink)}
 td small{display:block;color:var(--mute);font-size:11px}.more{width:100%;margin-top:8px;font:700 14px system-ui,sans-serif;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.hid{display:none}.W{font-weight:800}
-</style></head><body><div class="wrap">
+svg{display:block;width:100%;height:auto}svg text{font:11px system-ui,sans-serif;fill:var(--mute)}svg .ax{stroke:var(--line);stroke-width:1}.h1{fill:var(--acc2);opacity:.38}.h2{fill:var(--acc2);opacity:.75}.h3{fill:var(--acc2)}.w9{fill:var(--acc);stroke:var(--ink);stroke-width:1.2;pointer-events:none}.lg{display:flex;flex-wrap:wrap;gap:6px 14px;font:12px system-ui,sans-serif;color:var(--mute);margin-top:8px}.lg i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px}.gb{fill:var(--good)}.rb{fill:var(--bad)}.dot{fill:var(--acc2)}.dg{fill:var(--good)}.dr{fill:var(--bad)}.ln1{stroke:var(--acc);fill:none;stroke-width:2.5}.ln2{stroke:var(--acc2);fill:none;stroke-width:2.5;stroke-dasharray:5 4}.bar{fill:var(--acc2);opacity:.75}.chk{display:flex;gap:8px;margin:10px 0}.chk input{flex:1;min-width:0;font:15px system-ui,sans-serif;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}.mx{overflow-x:auto}</style></head><body><div class="wrap">
 
 <div class="mast"><small>2026 Season · Est. 2019</small><h1>Thunder Dome</h1><p>Eight seasons of matchup history. Search anything.</p></div>
 
@@ -48,6 +48,7 @@ td small{display:block;color:var(--mute);font-size:11px}.more{width:100%;margin-
 <div id="v-own" class="hid"><div class="f"><select class="full" id="oo"></select></div><div id="os"></div><div class="card tbl" id="ot"></div></div>
 <div id="v-rec" class="hid"><div class="f"><select class="full" id="rl"><option value="hi">Highest scores</option><option value="lo">Lowest scores</option><option value="bl">Biggest blowouts</option><option value="cl">Closest games</option><option value="th">Highest combined scores</option><option value="tl">Lowest combined scores</option></select></div><div class="card tbl" id="rt"></div></div>
 <div id="v-luck" class="hid"><div class="f"><select id="ly"></select><select id="ls"><option value="w">Sort by wins above expectation</option><option value="n">Sort by Net</option></select></div><p class="box" style="font-size:14px;color:var(--mute)">Wins above expectation compares each team’s record with the record its weekly scores would predict. Net is the Defense Score minus the Offense Score from the Opponent Timing tab, where each score is the elite count minus the terrible count. A positive Net means fortunate timing and a negative Net means bad timing.</p><div class="card tbl" id="lt"></div></div>
+<div id="v-viz" class="hid"><div class="f"><select class="full" id="vk"><option value="heat">Scorigami heat map</option><option value="luck">Luck bars: wins above expectation and Net</option><option value="scat">Offense vs. defense scatter</option><option value="mat">Head-to-head heat map</option><option value="trend">Scoring trend by season</option><option value="hist">Score distribution</option></select><select id="vy"></select><select id="vo" class="hid"></select></div><div class="card" id="vz"></div></div>
 <div id="v-po" class="hid"><div class="f"><select id="py"></select><select id="pw"></select></div><div id="ps"></div><div class="card tbl" id="pt"></div>
 <h2>Playoff Leaderboard</h2><div class="card tbl" id="pl"></div>
 <h2>Playoff Head to Head</h2><div class="f"><select id="pa"></select><select id="pb"></select></div><div id="phs"></div><div class="card tbl" id="pht"></div>
@@ -67,7 +68,7 @@ var years=Array.from(new Set(G.map(function(g){return g.y}))).sort().reverse();
 function opt(id,first,list){$(id).innerHTML=(first?'<option value="">'+first+'</option>':'')+list.map(function(x){return'<option>'+x+'</option>'}).join('')}
 opt('go','Any owner',owners);opt('gp','Any opponent',owners);opt('gy','Any year',years);opt('gw','Any week',Array.from({length:14},function(_,i){return i+1}));
 opt('ha',null,owners);opt('hb',null,owners);opt('oo',null,owners);$('hb').selectedIndex=1;
-var tabs=[['games','Search games'],['h2h','Head to head'],['own','Owner profiles'],['rec','Records'],['luck','Luck metrics'],['po','Playoffs'],['sea','Seasons &amp; awards'],['his','Champions &amp; punishments']];
+var tabs=[['games','Search games'],['h2h','Head to head'],['own','Owner profiles'],['rec','Records'],['luck','Luck metrics'],['viz','Charts'],['po','Playoffs'],['sea','Seasons &amp; awards'],['his','Champions &amp; punishments']];
 $('tabs').innerHTML=tabs.map(function(t,i){return'<button data-t="'+t[0]+'"'+(i?'':' class="on"')+'>'+t[1]+'</button>'}).join('');
 $('tabs').onclick=function(e){var t=e.target.getAttribute('data-t');if(!t)return;tabs.forEach(function(x){$('v-'+x[0]).classList.toggle('hid',x[0]!=t)});Array.prototype.forEach.call($('tabs').children,function(b){b.classList.toggle('on',b.getAttribute('data-t')==t)})};
 function box(a){return'<div class="sum">'+a.map(function(x){return'<div>'+x[0]+'<b>'+x[1]+'</b></div>'}).join('')+'</div>'}
@@ -156,5 +157,65 @@ function luck(){var y=$('ly').value,by={};
  var ks=Object.keys(by).sort(function(a,b){return $('ls').value=='n'?by[b].n-by[a].n||by[b].wae-by[a].wae:by[b].wae-by[a].wae});
  $('lt').innerHTML='<table><tr><th>Owner</th><th class="n">W-L</th><th class="n">Exp</th><th class="n">WAE</th><th class="n">Def</th><th class="n">Off</th><th class="n">Net</th></tr>'+ks.map(function(k){var o=by[k],all=y=='All seasons';return'<tr><td>'+k+'</td><td class="n">'+o.w+'-'+o.l+'</td><td class="n">'+(all?o.ew.toFixed(1):o.ex.replace(/ /g,''))+'</td><td class="n">'+sg(o.wae)+'</td><td class="n">'+sg(o.d)+'</td><td class="n">'+sg(o.f)+'</td><td class="n W">'+sg(o.n)+'</td></tr>'}).join('')+'</table>'}
 $('ly').oninput=$('ls').oninput=luck;luck();
+
+opt('vy',null,Array.from(new Set(SOS.map(function(r){return r[0]}))).sort().reverse());opt('vo','All owners',owners);
+var NS='';
+function bars(items,sc,fm,lab){var z=200,h=items.length*24+10,o='<svg viewBox="0 0 360 '+h+'" role="img" aria-label="'+lab+'"><line class="ax" x1="'+z+'" y1="2" x2="'+z+'" y2="'+(h-6)+'"/>';
+ items.forEach(function(it,i){var v=it[1],y=6+i*24,w=Math.abs(v)*sc,x=v>=0?z:z-w;o+='<rect class="'+(v>=0?'gb':'rb')+'" x="'+x.toFixed(1)+'" y="'+y+'" width="'+Math.max(w,1.5).toFixed(1)+'" height="16" rx="2"/><text x="8" y="'+(y+12)+'" style="fill:var(--ink)">'+it[0]+'</text><text x="'+(v>=0?z+w+5:z-w-5).toFixed(1)+'" y="'+(y+12)+'" text-anchor="'+(v>=0?'start':'end')+'">'+fm(v)+'</text>'});return o+'</svg>'}
+function vHeat(){var C=4,X0=34,Y0=8,nx=140,ny=125,cnt={};G.forEach(function(g){var k=Math.floor(g.ws)+','+Math.floor(g.ls);(cnt[k]=cnt[k]||[]).push(g)});
+ var my=Math.max.apply(null,G.map(function(g){return g.y})),mw=Math.max.apply(null,G.filter(function(g){return g.y==my}).map(function(g){return g.wk})),last=G.filter(function(g){return g.y==my&&g.wk==mw});
+ var W=X0+nx*C+6,H=Y0+ny*C+26,px=function(l){return X0+(l-28)*C},py=function(w){return Y0+(195-w)*C};
+ var o='<svg id="hm" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Rounded Scorigami heat map">';
+ for(var t=40;t<=160;t+=20)o+='<line class="ax" x1="'+(px(t)+2)+'" y1="'+Y0+'" x2="'+(px(t)+2)+'" y2="'+(Y0+ny*C)+'" opacity=".5"/><text x="'+(px(t)+2)+'" y="'+(Y0+ny*C+13)+'" text-anchor="middle">'+t+'</text>';
+ for(t=80;t<=180;t+=20)o+='<line class="ax" x1="'+X0+'" y1="'+(py(t)+2)+'" x2="'+(X0+nx*C)+'" y2="'+(py(t)+2)+'" opacity=".5"/><text x="'+(X0-5)+'" y="'+(py(t)+5)+'" text-anchor="end">'+t+'</text>';
+ Object.keys(cnt).forEach(function(k){var p=k.split(','),n=cnt[k].length;o+='<rect class="h'+Math.min(n,3)+'" data-k="'+k+'" x="'+px(+p[1])+'" y="'+py(+p[0])+'" width="'+C+'" height="'+C+'"/>'});
+ last.forEach(function(g){o+='<circle class="w9" cx="'+(px(Math.floor(g.ls))+2)+'" cy="'+(py(Math.floor(g.ws))+2)+'" r="4.6"/>'});
+ o+='<text x="'+(X0+nx*C/2)+'" y="'+(H-3)+'" text-anchor="middle">Loser’s score (rounded down)</text><text transform="rotate(-90 9 '+(Y0+ny*C/2)+')" x="9" y="'+(Y0+ny*C/2)+'" text-anchor="middle">Winner’s score</text></svg>';
+ var rep=Object.keys(cnt).filter(function(k){return cnt[k].length>1}).length;
+ $('vz').innerHTML='<p class="box" style="margin-bottom:8px">Every game since 2019 plotted by its rounded final score. '+G.length+' games have produced '+Object.keys(cnt).length+' unique combinations, with '+rep+' repeated. The orange dots are the latest week (Week '+mw+', '+my+').</p><div class="chk"><input id="cw" type="number" inputmode="numeric" placeholder="Winner score"><input id="cl" type="number" inputmode="numeric" placeholder="Loser score"></div><div id="vp" class="box" style="margin-bottom:8px">Type a rounded score or tap a square to see the games.</div>'+o+'<div class="lg"><span><i style="background:var(--acc2);opacity:.38"></i>Once</span><span><i style="background:var(--acc2);opacity:.75"></i>Twice</span><span><i style="background:var(--acc2)"></i>Three times</span><span><i style="background:var(--acc);border:1px solid var(--ink);border-radius:50%"></i>Latest week</span></div>';
+ var show=function(w,l){var a=cnt[w+','+l];$('vp').innerHTML=a?'<b>'+w+'–'+l+'</b> has happened '+a.length+' time'+(a.length>1?'s':'')+':<br>'+a.map(function(g){return g.w+' over '+g.l+' · '+g.y+' Wk '+g.wk+' · '+g.ws.toFixed(2)+'–'+g.ls.toFixed(2)}).join('<br>'):'<b>'+w+'–'+l+'</b> has never happened. That would be a new Scorigami.'};
+ var chk=function(){var w=Math.floor($('cw').value),l=Math.floor($('cl').value);if($('cw').value!==''&&$('cl').value!=='')show(w,l)};
+ $('cw').oninput=$('cl').oninput=chk;
+ $('hm').onclick=function(e){var k=e.target.getAttribute('data-k');if(!k)return;var p=k.split(',');$('cw').value=p[0];$('cl').value=p[1];show(+p[0],+p[1])}}
+function vLuck(){var y=+$('vy').value,rows=SOS.filter(function(r){return r[0]==y}),net={};OTA.forEach(function(r){if(r[0]==y)net[r[1]]=r[18]});
+ var a=rows.map(function(r){return[r[1],r[13]]}).sort(function(p,q){return q[1]-p[1]}),b=rows.map(function(r){return[r[1],net[r[1]]||0]}).sort(function(p,q){return q[1]-p[1]});
+ $('vz').innerHTML='<p class="box" style="margin-bottom:8px"><b>Wins above expectation:</b> green teams won more than their weekly scores predict.</p>'+bars(a,52,function(v){return sg(v)},'Wins above expectation')+'<p class="box" style="margin:14px 0 8px"><b>Net (Defense minus Offense):</b> green is fortunate opponent timing and red is bad timing.</p>'+bars(b,24,function(v){return(v>0?'+':v<0?'\u2212':'')+Math.abs(v)},'Net')}
+function vScat(){var y=+$('vy').value,R=SOS.filter(function(r){return r[0]==y}),xs=R.map(function(r){return r[6]}),ys=R.map(function(r){return r[7]});
+ var x0=Math.floor(Math.min.apply(null,xs)/10)*10,x1=Math.ceil(Math.max.apply(null,xs)/10)*10,y0=Math.floor(Math.min.apply(null,ys)/10)*10,y1=Math.ceil(Math.max.apply(null,ys)/10)*10,L=38,T=10,Rr=350,B=268;
+ var fx=function(v){return L+(v-x0)/(x1-x0)*(Rr-L)},fy=function(v){return T+(v-y0)/(y1-y0)*(B-T)};
+ var o='<svg viewBox="0 0 360 '+(B+34)+'" role="img" aria-label="Points for versus points against">';
+ for(var t=x0;t<=x1;t+=10)o+='<line class="ax" x1="'+fx(t).toFixed(1)+'" y1="'+T+'" x2="'+fx(t).toFixed(1)+'" y2="'+B+'" opacity=".5"/><text x="'+fx(t).toFixed(1)+'" y="'+(B+13)+'" text-anchor="middle">'+t+'</text>';
+ for(t=y0;t<=y1;t+=10)o+='<line class="ax" x1="'+L+'" y1="'+fy(t).toFixed(1)+'" x2="'+Rr+'" y2="'+fy(t).toFixed(1)+'" opacity=".5"/><text x="'+(L-5)+'" y="'+(fy(t)+4).toFixed(1)+'" text-anchor="end">'+t+'</text>';
+ var pl=[];R.forEach(function(r){var c=r[9]>=0.6?'dg':r[9]<=0.3?'dr':'dot',X=fx(r[6]),Y=fy(r[7]),dy=-8;pl.forEach(function(p){if(Math.abs(X-p[0])<34&&Math.abs(Y-p[1])<12)dy=15});pl.push([X,Y]);o+='<circle class="'+c+'" cx="'+X.toFixed(1)+'" cy="'+Y.toFixed(1)+'" r="5.5"/><text x="'+X.toFixed(1)+'" y="'+(Y+dy).toFixed(1)+'" text-anchor="middle" style="fill:var(--ink)">'+r[1]+'</text>'});
+ o+='<text x="'+((L+Rr)/2)+'" y="'+(B+28)+'" text-anchor="middle">Points for per game</text><text transform="rotate(-90 10 '+((T+B)/2)+')" x="10" y="'+((T+B)/2)+'" text-anchor="middle">Points against per game (low is up)</text></svg>';
+ $('vz').innerHTML='<p class="box" style="margin-bottom:8px">Top right is good on both ends. Green dots are teams winning 60% or more, and red dots are teams winning 30% or less.</p>'+o}
+function vMat(){var os=owners.slice(),n=os.length,c=44,X0=60,Y0=44,m={};os.forEach(function(a){m[a]={};os.forEach(function(b){m[a][b]=[0,0]})});G.forEach(function(g){m[g.w][g.l][0]++;m[g.l][g.w][1]++});
+ var W=X0+n*c+4,H=Y0+n*c+4,o='<svg viewBox="0 0 '+W+' '+H+'" style="min-width:600px" role="img" aria-label="Head-to-head matrix">';
+ os.forEach(function(b,j){o+='<text x="'+(X0+j*c+c/2)+'" y="'+(Y0-8)+'" text-anchor="middle" style="fill:var(--ink)">'+b+'</text>'});
+ os.forEach(function(a,i){o+='<text x="'+(X0-6)+'" y="'+(Y0+i*c+c/2+4)+'" text-anchor="end" style="fill:var(--ink)">'+a+'</text>';
+  os.forEach(function(b,j){var r=m[a][b],t=r[0]+r[1],x=X0+j*c,y=Y0+i*c;if(a==b||!t){o+='<rect x="'+x+'" y="'+y+'" width="'+(c-2)+'" height="'+(c-2)+'" rx="3" style="fill:var(--line);opacity:.45"/>';return}
+   var p=r[0]/t,op=(0.18+Math.abs(p-.5)*1.5).toFixed(2);o+='<rect x="'+x+'" y="'+y+'" width="'+(c-2)+'" height="'+(c-2)+'" rx="3" style="fill:var(--'+(p>=.5?'good':'bad')+');opacity:'+op+'"/><text x="'+(x+c/2-1)+'" y="'+(y+c/2+4)+'" text-anchor="middle" style="fill:var(--ink)">'+r[0]+'-'+r[1]+'</text>'})});
+ $('vz').innerHTML='<p class="box" style="margin-bottom:8px">Each row is that owner’s all-time regular-season record against the column owner. Green is a winning record and red is a losing one.</p><div class="mx">'+o+'</svg></div>'}
+function vTrend(){var o=$('vo').value,ys=Array.from(new Set(SOS.map(function(r){return r[0]}))).sort(),pf=[],pa=[];
+ ys.forEach(function(y){var R=SOS.filter(function(r){return r[0]==y&&(!o||r[1]==o)});if(R.length){pf.push([y,R.reduce(function(s,r){return s+r[6]},0)/R.length]);pa.push([y,R.reduce(function(s,r){return s+r[7]},0)/R.length])}});
+ var all=pf.concat(pa).map(function(p){return p[1]}),y0=Math.floor(Math.min.apply(null,all)/10)*10-5,y1=Math.ceil(Math.max.apply(null,all)/10)*10+5,L=38,T=14,Rr=348,B=240;
+ var fx=function(y){return L+(y-2019)/7*(Rr-L)},fy=function(v){return B-(v-y0)/(y1-y0)*(B-T)};
+ var s='<svg viewBox="0 0 360 270" role="img" aria-label="Scoring trend">';
+ for(var t=y0;t<=y1;t+=10)s+='<line class="ax" x1="'+L+'" y1="'+fy(t).toFixed(1)+'" x2="'+Rr+'" y2="'+fy(t).toFixed(1)+'" opacity=".5"/><text x="'+(L-5)+'" y="'+(fy(t)+4).toFixed(1)+'" text-anchor="end">'+t+'</text>';
+ ys.forEach(function(y){s+='<text x="'+fx(y).toFixed(1)+'" y="'+(B+14)+'" text-anchor="middle">'+y+'</text>'});
+ var path=function(a){return a.map(function(p,i){return(i?'L':'M')+fx(p[0]).toFixed(1)+' '+fy(p[1]).toFixed(1)}).join(' ')};
+ s+='<path class="ln1" d="'+path(pf)+'"/><path class="ln2" d="'+path(pa)+'"/>';
+ pf.forEach(function(p){s+='<circle class="dg" style="fill:var(--acc)" cx="'+fx(p[0]).toFixed(1)+'" cy="'+fy(p[1]).toFixed(1)+'" r="3.5"/><text x="'+fx(p[0]).toFixed(1)+'" y="'+(fy(p[1])-8).toFixed(1)+'" text-anchor="middle" style="fill:var(--ink)">'+p[1].toFixed(0)+'</text>'});
+ s+='<text x="'+((L+Rr)/2)+'" y="262" text-anchor="middle">Solid: points for per game · Dashed: points against per game</text></svg>';
+ $('vz').innerHTML='<p class="box" style="margin-bottom:8px">'+(o?o+'’s':'The league’s')+' average scoring by season. 2026 is in progress.</p>'+s}
+function vHist(){var o=$('vo').value,sc=[];G.forEach(function(g){if(!o||g.w==o)sc.push(g.ws);if(!o||g.l==o)sc.push(g.ls)});
+ var bins=[];for(var b=20;b<200;b+=10)bins.push([b,0]);sc.forEach(function(v){var i=Math.min(Math.floor((v-20)/10),bins.length-1);if(i>=0)bins[i][1]++});
+ var mx=Math.max.apply(null,bins.map(function(b){return b[1]})),mean=sc.reduce(function(a,b){return a+b},0)/sc.length,L=30,Bt=230,Rr=352,w=(Rr-L)/bins.length;
+ var s='<svg viewBox="0 0 360 262" role="img" aria-label="Score distribution">';
+ bins.forEach(function(b,i){var h=b[1]/mx*(Bt-16),x=L+i*w;s+='<rect class="bar" x="'+(x+1).toFixed(1)+'" y="'+(Bt-h).toFixed(1)+'" width="'+(w-2).toFixed(1)+'" height="'+h.toFixed(1)+'"/>'+(i%2==0?'<text x="'+(x+w/2).toFixed(1)+'" y="'+(Bt+13)+'" text-anchor="middle">'+b[0]+'</text>':'')});
+ var mxp=L+(mean-20)/180*(Rr-L);s+='<line x1="'+mxp.toFixed(1)+'" y1="10" x2="'+mxp.toFixed(1)+'" y2="'+Bt+'" style="stroke:var(--acc);stroke-width:2;stroke-dasharray:4 3"/><text x="'+(mxp+4).toFixed(1)+'" y="20" style="fill:var(--acc)">Avg '+mean.toFixed(1)+'</text><text x="'+((L+Rr)/2)+'" y="256" text-anchor="middle">Points scored in a game (10-point buckets)</text></svg>';
+ $('vz').innerHTML='<p class="box" style="margin-bottom:8px">'+sc.length+' team scores'+(o?' by '+o:' across the league')+'.</p>'+s}
+function viz(){var k=$('vk').value||'heat';$('vy').classList.toggle('hid',!(k=='luck'||k=='scat'));$('vo').classList.toggle('hid',!(k=='trend'||k=='hist'));({heat:vHeat,luck:vLuck,scat:vScat,mat:vMat,trend:vTrend,hist:vHist})[k]()}
+$('vk').oninput=$('vy').oninput=$('vo').oninput=viz;viz();
 po();poh();sea();
 </script></body></html>
